@@ -1,0 +1,6 @@
+@import "header";
+<% if @configuration[:template] -%>
+@import url('../<%= @configuration[:template] %>/style.css');
+<% else -%>
+@import "reset";
+<% end -%>

@@ -1,0 +1,18 @@
+/**
+ * Theme Name: <%= @configuration[:name] %>
+ * Theme URI: <%= @configuration[:uri] %>
+ * Author: <%= @configuration[:author] %>
+ * Author URI: <%= @configuration[:author_uri] %>
+ * Description: <%= @configuration[:description] if @configuration[:description] %>
+ * Version: <%= @configuration[:version_number] if @configuration[:version_number] %>
+<% if @configuration[:template] -%>
+ * Template: <%= @configuration[:template] %>
+<% end -%>
+ * License: <%= @configuration[:license_name] if @configuration[:license_name] %>
+ * License URI: <%= @configuration[:license_uri] if @configuration[:license_uri] %>
+ * Tags: <%= @configuration[:tags].join(", ") if @configuration[:tags] %>
+<%- unless @configuration[:comments].nil? || @configuration[:comments].empty? -%>
+ *
+ * <%= @configuration[:comments] %>
+<%- end -%>
+ */

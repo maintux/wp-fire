@@ -1,0 +1,88 @@
+/* Global Styles */
+/* reset.css */
+html {margin:0;padding:0;border:0;}
+html, body  { height: 100%; min-height: 100%; margin: 0; padding: 0; }
+body, div, span, object, iframe, blockquote, pre, a, abbr, acronym, address, code, del, dfn, em, img, q, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, dialog, figure, footer, header, hgroup, nav, section {margin:0;padding:0;border:0;font-weight:inherit;font-style:inherit;vertical-align:baseline;}
+body { font-size: 10px; line-height: 1.2 }
+table {border-collapse:separate;border-spacing:0;}
+table, th, td {vertical-align:middle;}
+a img {border:none;}
+:focus {outline:0;}
+
+strong, b {font-weight: bold;}
+em, i {font-style: italic;}
+
+/* Trick the WordPress Theme Bot *Evil* */
+.aligncenter      { display: block; margin: 0 auto; }
+.alignright       { float: right; margin: 0 0 1em 1em; }
+.alignleft        { float: left; margin: 0 1em 1em 0; }
+.floatleft        { float: left; }
+.floatright       { float: right; }
+img.aligncenter, img.alignright, img.alignleft  { border: 1px solid #DDD; text-align: center; background: #F3F3F3; padding: 4px; }
+
+.textcenter       { text-align: center; }
+.textright        { text-align: right; }
+.textleft       { text-align: left; }
+.textjustify        { text-align: justify; }
+
+.clear-left { clear: left}
+.clear-right { clear: left}
+.clear { clear: both; display: block;}
+.clearfix  { display: inline-block; }
+
+.relative { position: relative; }
+.absolute { position: absolute; }
+
+p  { padding: 0; }
+input[type=text], input[type=password], textarea  { background: url(../images/form.jpg) repeat-x top #FFF; border: 1px solid #CCC; padding: 3px; }
+
+.text-overflow{
+  white-space: nowrap;
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  /*-o-text-overflow: ellipsis;
+  text-overflow: ellipsis; */
+}
+
+
+/* Hyperlinks */
+a img  { border: none; }
+a:focus, a:hover, a:active  { outline: none; }
+
+/* Headings */
+h2, h3, h4, h5, h6  { margin: 1em 0; }
+h2  { font-size: 2em; }
+h3  { font-size: 1.8em; }
+h4  { font-size: 1.6em; }
+h5  { font-size: 1.4em; }
+h6  { font-size: 1.2em; }
+
+/* Tables */
+table  { border-collapse: collapse; border-spacing: 0; }
+th, td  { padding: 5px; }
+
+/* Structure */
+#wrapper { min-height: 100%; position: relative; padding: 0 0 20px 0; }
+#main { padding: 10px 15px 0; width:958px; margin:0 auto; position:relative; }
+#nav { width:960px; margin:0 auto; position:relative; z-index: 50; }
+#container { overflow: hidden}
+
+/* Footer */
+#footer { margin: 0 auto; width: 988px; padding: 20px 0 10px 0;}
+#footer .footer-message { margin: 0; padding: 10px 15px 0; }
+#wpstats {display: none;}
+
+/* Background per iPad */
+body {
+  -webkit-background-size: 1920px 1080px;
+}
+.underline {
+  text-decoration: underline;
+}
+.capitalize {
+  text-transform: capitalize;
+}
+.uppercase {
+  text-transform: uppercase;
+}
