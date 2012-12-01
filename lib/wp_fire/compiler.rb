@@ -1,20 +1,27 @@
+require 'coffee-script'
+require 'sass'
+
 module WpFire
   class Compiler
 
-    def self.compile(filename,build_path)
+    def self.compile(filename, build_path)
       extname = File.extname(filename)
-      basename = File.basename(filename,extname)
+      basename = File.basename(filename, extname)
       if not basename[0].eql?"_" and extname.eql?".scss"
-        system "sass #{filename} #{File.join(build_path,basename)}"
+        sass_engine = Sass::Engine.for_file filename, {}
+        File.open File.join(build_path, basename), "w" do |f|
+          f.puts sass_engine.to_css
+        end
       elsif extname.eql?".coffee"
-        system "coffee -c -o #{build_path} #{filename}"
-        File.rename File.join(build_path,"#{basename}.js"), File.join(build_path,basename)
+        File.open File.join(build_path, basename), "w" do |f|
+          f.puts CoffeeScript.compile File.read(filename)
+        end
       elsif extname.eql?".php"
-        FileUtils.cp filename, File.join(build_path,File.basename(filename))
+        FileUtils.cp filename, File.join(build_path, File.basename(filename))
       end
     end
 
-    def self.compile_all(filenames,build_path)
+    def self.compile_all(filenames, build_path)
       files = []
       filenames.each do |filename|
         if(File.directory?(filename))
@@ -25,7 +32,7 @@ module WpFire
         end
       end
       files.each do |f|
-        compile f,build_path
+        compile f, build_path
       end
     end
 

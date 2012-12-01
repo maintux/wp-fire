@@ -1,10 +1,8 @@
-#! /usr/bin/env ruby
 require 'rubygems'
 require 'clamp'
-require 'forge'
 require 'thor'
 require 'filewatcher'
-require 'zip/zip'
+require 'fileutils'
 
 class ThorUtils < Thor
   include Thor::Actions
@@ -26,7 +24,7 @@ module WpFire
       @functions_path = File.join(dir,"source","functions")
 
       @build_path = File.join(dir,"build")
-      Dir.unlink(@build_path) if File.directory?(@build_path)
+      FileUtils.rm_rf(@build_path) if File.directory?(@build_path)
       Dir.mkdir @build_path
       Dir[File.join(dir.split(/\\/), "*.*")].each do |f|
         File.unlink f unless File.basename(f).eql? "config.rb"
