@@ -13,6 +13,7 @@ module WpFire
 
     def create_structure
       source_paths = [
+        ['assets', 'fonts'],
         ['assets', 'images'],
         ['assets', 'javascripts'],
         ['assets', 'stylesheets'],

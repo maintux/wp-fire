@@ -25,6 +25,9 @@ module WpFire
       elsif [".jpg",".jpeg",".png",".gif",".ico"].include?(extname)
         Dir.mkdir File.join(build_path, "images") unless File.directory?(File.join(build_path, "images"))
         FileUtils.cp filename, File.join(build_path, "images", File.basename(filename))
+      elsif [".ttf",".eot",".woff",".svg",".otf"].include?(extname)
+        Dir.mkdir File.join(build_path, "fonts") unless File.directory?(File.join(build_path, "fonts"))
+        FileUtils.cp filename, File.join(build_path, "fonts", File.basename(filename))
       end
     end
 
