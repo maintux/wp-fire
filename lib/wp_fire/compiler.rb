@@ -12,12 +12,19 @@ module WpFire
         File.open File.join(build_path, basename), "w" do |f|
           f.puts sass_engine.to_css
         end
+      elsif extname.eql?".css"
+        FileUtils.cp filename, File.join(build_path, File.basename(filename))
       elsif extname.eql?".coffee"
         File.open File.join(build_path, basename), "w" do |f|
           f.puts CoffeeScript.compile File.read(filename)
         end
+      elsif extname.eql?".js"
+        FileUtils.cp filename, File.join(build_path, File.basename(filename))
       elsif extname.eql?".php"
         FileUtils.cp filename, File.join(build_path, File.basename(filename))
+      elsif [".jpg",".jpeg",".png",".gif",".ico"].include?(extname)
+        Dir.mkdir File.join(build_path, "images") unless File.directory?(File.join(build_path, "images"))
+        FileUtils.cp filename, File.join(build_path, "images", File.basename(filename))
       end
     end
 
