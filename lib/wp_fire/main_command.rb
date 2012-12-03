@@ -26,9 +26,6 @@ module WpFire
       @build_path = File.join(dir,"build")
       FileUtils.rm_rf(@build_path) if File.directory?(@build_path)
       Dir.mkdir @build_path
-      Dir[File.join(dir.split(/\\/), "*.*")].each do |f|
-        File.unlink f unless File.basename(f).eql? "config.rb"
-      end
       watch_directories = [@assets_path,@templates_path,@functions_path]
       WpFire::Compiler.compile_all watch_directories, @build_path
     end
@@ -51,8 +48,12 @@ module WpFire
         @build_path = dir
       end
 
-      Dir[File.join(dir.split(/\\/), "*.*")].each do |f|
-        File.unlink f unless File.basename(f).eql? "config.rb"
+      Dir[File.join(dir,"*")].each do |f|
+        unless File.directory?(f)
+          File.unlink f unless File.basename(f).eql? "config.rb"
+        else
+          FileUtils.rm_rf(f) unless File.basename(f).eql? "source"
+        end
       end
       watch_directories = [@assets_path,@templates_path,@functions_path]
       WpFire::Compiler.compile_all watch_directories, @build_path
