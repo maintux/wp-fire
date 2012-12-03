@@ -9,6 +9,7 @@ Gem::Specification.new do |s|
   s.files       = Dir['wp_fire.rb', 'lib/**/*', 'bin/*', 'generators/**/*']
   s.homepage    = 'https://github.com/maintux/wp-fire'
   s.has_rdoc    = false
+  s.licenses    = 'GPL-2'
   s.add_dependency 'clamp'
   s.add_dependency 'thor'
   s.add_dependency 'filewatcher'
