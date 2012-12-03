@@ -10,10 +10,7 @@ if ( ! function_exists( '<%= theme_id %>_enqueue_scripts' ) ) :
 function <%= theme_id %>_enqueue_scripts() {
 
 	if ( ! is_admin() ) {
-		wp_enqueue_style(
-			'<%= theme_id %>-style',
-			get_bloginfo( 'stylesheet_url' )
-		);
+		wp_enqueue_script('theme', get_stylesheet_directory_uri() . '/theme.js', 'jquery', null);
 	}
 
 }
