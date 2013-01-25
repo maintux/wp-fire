@@ -15,11 +15,8 @@ module WpFire
       elsif basename[0].eql?"_" and extname.eql?".scss"
         parents_filename = []
         find_scss_parents(filename,parents_filename)
-        parents_filename.each do |parent|
-          sass_engine = Sass::Engine.for_file parent, {}
-          File.open File.join(build_path, File.basename(parent,".scss")), "w" do |f|
-            f.puts sass_engine.to_css
-          end
+        parents_filename.uniq.each do |parent|
+          compile parent, build_path
         end
       elsif extname.eql?".css"
         FileUtils.cp filename, File.join(build_path, File.basename(filename))
