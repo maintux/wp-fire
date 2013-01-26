@@ -12,6 +12,12 @@ module WpFire
         File.open File.join(build_path, basename), "w" do |f|
           f.puts sass_engine.to_css
         end
+      elsif basename[0].eql?"_" and extname.eql?".scss"
+        parents_filename = []
+        find_scss_parents(filename,parents_filename)
+        parents_filename.uniq.each do |parent|
+          compile parent, build_path
+        end
       elsif extname.eql?".css"
         FileUtils.cp filename, File.join(build_path, File.basename(filename))
       elsif extname.eql?".coffee"
@@ -50,6 +56,19 @@ module WpFire
 
     def self.find(dir, filename="*.*", subdirs=true)
       Dir[ subdirs ? File.join(dir.split(/\\/), "**", filename) : File.join(dir.split(/\\/), filename) ]
+    end
+
+    def self.find_scss_parents(filename,parents_array)
+      directory = File.dirname(filename)
+      Dir["#{directory}/*.scss"].each do |f|
+        if open(f).grep(/@import ["']#{File.basename(filename).gsub(/(_|\.scss)/,'')}["']/).any?
+          if File.basename(f)[0].eql?"_" and not f.eql? filename
+            find_scss_parents(f,parents_array)
+          elsif not File.basename(f)[0].eql?"_"
+            parents_array << f
+          end 
+        end
+      end
     end
 
   end
