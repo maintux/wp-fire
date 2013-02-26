@@ -4,6 +4,8 @@ Wp Fire
 **Wordpress theme generator with Coffee Script and Sass support**
 -----
 
+[![Code Climate](https://codeclimate.com/github/maintux/wp-fire.png)](https://codeclimate.com/github/maintux/wp-fire)
+
 Install Wp Fire (requires [Ruby](http://www.ruby-lang.org/))
 
     $ gem install wp-fire
