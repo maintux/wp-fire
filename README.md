@@ -5,6 +5,7 @@ Wp Fire
 -----
 
 [![Code Climate](https://codeclimate.com/github/maintux/wp-fire.png)](https://codeclimate.com/github/maintux/wp-fire)
+[![Dependency Status](https://gemnasium.com/maintux/wp-fire.png)](https://gemnasium.com/maintux/wp-fire)
 
 Install Wp Fire (requires [Ruby](http://www.ruby-lang.org/))
 
