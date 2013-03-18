@@ -30,7 +30,9 @@ module WpFire
         FileUtils.cp filename, File.join(build_path, File.basename(filename))
       else
         dir = File.dirname(filename)
-        dir = dir.sub(File.join(root_path,"surce"),'')
+        dir = dir.sub(File.join(root_path,"source"),'')
+        #unwrap from assets path for backward compatibility
+        dir = dir.sub("assets",'')
         FileUtils.mkdir_p File.join(build_path, dir) unless File.directory?(File.join(build_path, dir))
         FileUtils.cp filename, File.join(build_path, dir, File.basename(filename))
       end
