@@ -16,7 +16,7 @@ module WpFire
         parents_filename = []
         find_scss_parents(filename,parents_filename)
         parents_filename.uniq.each do |parent|
-          compile parent, build_path
+          compile parent, build_path, root_path
         end
       elsif extname.eql?".css"
         FileUtils.cp filename, File.join(build_path, File.basename(filename))
