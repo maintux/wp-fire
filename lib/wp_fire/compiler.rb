@@ -4,7 +4,7 @@ require 'sass'
 module WpFire
   class Compiler
 
-    def self.compile(filename, build_path)
+    def self.compile(filename, build_path, root_path)
       extname = File.extname(filename)
       basename = File.basename(filename, extname)
       if not basename[0].eql?"_" and extname.eql?".scss"
@@ -28,16 +28,16 @@ module WpFire
         FileUtils.cp filename, File.join(build_path, File.basename(filename))
       elsif extname.eql?".php"
         FileUtils.cp filename, File.join(build_path, File.basename(filename))
-      elsif [".jpg",".jpeg",".png",".gif",".ico"].include?(extname)
-        Dir.mkdir File.join(build_path, "images") unless File.directory?(File.join(build_path, "images"))
-        FileUtils.cp filename, File.join(build_path, "images", File.basename(filename))
-      elsif [".ttf",".eot",".woff",".svg",".otf"].include?(extname)
-        Dir.mkdir File.join(build_path, "fonts") unless File.directory?(File.join(build_path, "fonts"))
-        FileUtils.cp filename, File.join(build_path, "fonts", File.basename(filename))
+      else
+        dir = File.dirname(filename)
+        dir = dir.sub(root_path,'')
+        FileUtils.mkdir_p File.join(build_path, dir) unless File.directory?(File.join(build_path, dir))
+        FileUtils.cp filename, File.join(build_path, dir, File.basename(filename))
       end
+
     end
 
-    def self.compile_all(filenames, build_path)
+    def self.compile_all(filenames, build_path, root_path)
       files = []
       filenames.each do |filename|
         if(File.directory?(filename))
@@ -48,7 +48,7 @@ module WpFire
         end
       end
       files.each do |f|
-        compile f, build_path
+        compile f, build_path, root_path
       end
     end
 
@@ -66,7 +66,7 @@ module WpFire
             find_scss_parents(f,parents_array)
           elsif not File.basename(f)[0].eql?"_"
             parents_array << f
-          end 
+          end
         end
       end
     end

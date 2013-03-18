@@ -24,10 +24,11 @@ module WpFire
       @functions_path = File.join(dir,"source","functions")
 
       @build_path = File.join(dir,"build")
+      @root_path = dir
       FileUtils.rm_rf(@build_path) if File.directory?(@build_path)
       Dir.mkdir @build_path
       watch_directories = [@assets_path,@templates_path,@functions_path]
-      WpFire::Compiler.compile_all watch_directories, @build_path
+      WpFire::Compiler.compile_all watch_directories, @build_path, @root_path
     end
 
   end
@@ -47,6 +48,7 @@ module WpFire
       else
         @build_path = dir
       end
+      @root_path = dir
 
       Dir[File.join(dir,"*")].each do |f|
         unless File.directory?(f)
@@ -56,10 +58,10 @@ module WpFire
         end
       end
       watch_directories = [@assets_path,@templates_path,@functions_path]
-      WpFire::Compiler.compile_all watch_directories, @build_path
+      WpFire::Compiler.compile_all watch_directories, @build_path, @root_path
 
       FileWatcher.new(watch_directories,"Watching files:").watch do |filename|
-        WpFire::Compiler.compile filename, @build_path
+        WpFire::Compiler.compile filename, @build_path, @root_path
       end
     end
 
