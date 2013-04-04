@@ -19,7 +19,7 @@ Create a new theme
 If you want create a theme based on existing template
 
     $ cd your_wordpress_path/wp-content/themes/
-    $ wp_fire create -t template_name --template_path ./
+    $ wp_fire create -t template_name --template-path ./
 
 To edit theme settings
 
