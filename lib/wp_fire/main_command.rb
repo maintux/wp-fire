@@ -37,6 +37,7 @@ module WpFire
 
     parameter "DIR", "The theme root path"
     option ["-p","--build-path"], "BUILD_PATH", "Build path. The default is the theme root path", :default => nil
+    option "--raise-on-exception", :flag, "Raise exception if scss compiler fails"
 
     def execute
       @assets_path = File.join(dir,"source","assets")
@@ -58,10 +59,10 @@ module WpFire
         end
       end
       watch_directories = [@assets_path,@templates_path,@functions_path]
-      WpFire::Compiler.compile_all watch_directories, @build_path, @root_path
+      WpFire::Compiler.compile_all watch_directories, @build_path, @root_path, raise_on_exception?
 
       FileWatcher.new(watch_directories,"Watching files:").watch do |filename|
-        WpFire::Compiler.compile filename, @build_path, @root_path
+        WpFire::Compiler.compile filename, @build_path, @root_path, raise_on_exception?
       end
     end
 
