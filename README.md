@@ -30,6 +30,10 @@ Run watcher for compiling sass and coffeescript file
     $ cd your_wordpress_path/wp-content/themes/
     $ wp_fire watch new_theme_name (Ctrl + C to exit)
 
+Exit on sass or coffeescript compile exception
+
+    $ wp_fire watch --raise-on-exception new_theme_name
+
 License
 -------
 
