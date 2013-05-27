@@ -1,28 +1,39 @@
 require 'coffee-script'
 require 'sass'
+require 'colorize'
 
 module WpFire
   class Compiler
 
-    def self.compile(filename, build_path, root_path)
+    def self.compile(filename, build_path, root_path, raise_on_exception=false)
       extname = File.extname(filename)
       basename = File.basename(filename, extname)
       if not basename[0].eql?"_" and extname.eql?".scss"
         sass_engine = Sass::Engine.for_file filename, {}
-        File.open File.join(build_path, basename), "w" do |f|
-          f.puts sass_engine.to_css
+        begin
+          css_content = sass_engine.to_css
+          File.open File.join(build_path, basename), "w" do |f|
+            f.puts css_content
+          end
+        rescue Exception => e
+          manage_exception(e,raise_on_exception)
         end
       elsif basename[0].eql?"_" and extname.eql?".scss"
         parents_filename = []
         find_scss_parents(filename,parents_filename)
         parents_filename.uniq.each do |parent|
-          compile parent, build_path, root_path
+          compile parent, build_path, root_path, raise_on_exception
         end
       elsif extname.eql?".css"
         FileUtils.cp filename, File.join(build_path, File.basename(filename))
       elsif extname.eql?".coffee"
-        File.open File.join(build_path, basename), "w" do |f|
-          f.puts CoffeeScript.compile File.read(filename)
+        begin
+          js_content = CoffeeScript.compile File.read(filename)
+          File.open File.join(build_path, basename), "w" do |f|
+            f.puts js_content
+          end
+        rescue Exception => e
+          manage_exception(e,raise_on_exception)
         end
       elsif extname.eql?".js"
         FileUtils.cp filename, File.join(build_path, File.basename(filename))
@@ -39,7 +50,7 @@ module WpFire
 
     end
 
-    def self.compile_all(filenames, build_path, root_path)
+    def self.compile_all(filenames, build_path, root_path, raise_on_exception=false)
       files = []
       filenames.each do |filename|
         if(File.directory?(filename))
@@ -50,7 +61,7 @@ module WpFire
         end
       end
       files.each do |f|
-        compile f, build_path, root_path
+        compile f, build_path, root_path, raise_on_exception
       end
     end
 
@@ -58,6 +69,14 @@ module WpFire
 
     def self.find(dir, filename="*.*", subdirs=true)
       Dir[ subdirs ? File.join(dir.split(/\\/), "**", filename) : File.join(dir.split(/\\/), filename) ]
+    end
+
+    def self.manage_exception(e,raise_on_exception)
+      unless raise_on_exception
+        puts e.message.colorize(:red)
+      else
+        raise e
+      end
     end
 
     def self.find_scss_parents(filename,parents_array)
